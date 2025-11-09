@@ -1,0 +1,94 @@
+name: forcet-mongo
+
+namespace: forcet22-dev
+
+labels:
+  app: forcet-mongo
+
+workload:
+  type: StatefulSet 
+  replicas: 3
+  storageSize: 20Gi
+
+replicaCount: 2
+
+service:
+  enabled: true
+  type: ClusterIP    
+  port: 27017
+  targetPort: 27017
+  headless: true
+  protocol: TCP
+
+container:
+  port: 27017
+  failureThreshold: 5
+  initialDelaySeconds: 0
+  periodSeconds: 10
+
+image:
+  repository: "mongo"
+  tag: "6.0"
+
+resources:
+  request:
+    cpu: "500m"
+    memory: "800Mi"
+  limits:
+    cpu: "1000m"
+    memory: "1500Mi"
+
+probes:
+  startup:
+    enabled: false
+  readiness:
+    enabled: true
+    type: exec
+    execCommand:
+      - mongo
+      - --eval
+      - "db.adminCommand('ping')"
+      - --quiet
+    periodSeconds: 10
+    failureThreshold: 6
+  liveness:
+    enabled: true
+    type: tcpSocket
+    port: 27017
+    periodSeconds: 10
+    failureThreshold: 3   
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+
+configMap:
+  data: []
+
+secret:
+  enable: true
+  data: 
+    MONGO_INITDB_ROOT_USERNAME: forcet
+    MONGO_INITDB_ROOT_PASSWORD: pokepassword
+
+networkPolicy:
+  enabled: true
+  port: 27017 
+  ingressFromApps:
+    - forcet-poke-data
+  egressTo: []
+  allowInternetEgress: false
+  defaultDeny:
+    enable: true
+
+route:
+  enabled: false
+  host: ""          
+  serviceName: ""   
+  targetPort: ""
+  tls:
+    enabled: true
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

@@ -27,8 +27,9 @@ container:
   periodSeconds: 10
 
 image:
-  repository: "mongo"
+  repository: "docker.io/library/mongo"
   tag: "6.0"
+  pullPolicy: IfNotPresent
 
 resources:
   request:
@@ -65,10 +66,10 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
 
 configMap:
-  data: []
+  data: {}
 
 secret:
-  enable: true
+  enabled: true
   data: 
     MONGO_INITDB_ROOT_USERNAME: forcet
     MONGO_INITDB_ROOT_PASSWORD: pokepassword
@@ -81,7 +82,7 @@ networkPolicy:
   egressTo: []
   allowInternetEgress: false
   defaultDeny:
-    enable: true
+    enabled: true
 
 route:
   enabled: false

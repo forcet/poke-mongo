@@ -51,5 +51,5 @@ jobs:
           namespace: forcet22-dev
       - name: Deploy files
         run: |
-          helm show chart oci://registry-1.docker.io/${{ secrets.DOCKER_USERNAME  }}/helm-template --version 4
-          helm upgrade --install forcet-poke-mongo oci://registry-1.docker.io/${{ secrets.DOCKER_USERNAME  }}/helm-template --version 4 --values helm/values.yml
+          helm show chart oci://registry-1.docker.io/${{ secrets.DOCKER_USERNAME  }}/helm-template --version 5
+          helm upgrade --install forcet-poke-mongo oci://registry-1.docker.io/${{ secrets.DOCKER_USERNAME  }}/helm-template --version 5 --values helm/values.yml

@@ -23,7 +23,7 @@ service:
   type: ClusterIP    
   port: 27017
   targetPort: 27017
-  headless: true
+  headless: false
   protocol: TCP
 
 container:

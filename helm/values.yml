@@ -50,12 +50,8 @@ probes:
     enabled: false
   readiness:
     enabled: true
-    type: exec
-    execCommand:
-      - mongo
-      - --eval
-      - "db.adminCommand('ping')"
-      - --quiet
+    type: tcpSocket
+    port: 27017
     periodSeconds: 10
     failureThreshold: 6
   liveness:
@@ -63,7 +59,7 @@ probes:
     type: tcpSocket
     port: 27017
     periodSeconds: 10
-    failureThreshold: 3   
+    failureThreshold: 3
 
 autoscaling:
   enabled: true

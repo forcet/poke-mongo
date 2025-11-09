@@ -1,9 +1,9 @@
-name: forcet-mongo
+name: forcet-poke-mongo
 
 namespace: forcet22-dev
 
 labels:
-  app: forcet-mongo
+  app: forcet-poke-mongo
 
 workload:
   type: StatefulSet 
@@ -85,6 +85,7 @@ networkPolicy:
   allowInternetEgress: false
   defaultDeny:
     enabled: true
+  allowDnsEgress: true
 
 route:
   enabled: false

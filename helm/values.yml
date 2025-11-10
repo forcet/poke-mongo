@@ -7,7 +7,7 @@ labels:
 
 workload:
   type: StatefulSet 
-  replicas: 3
+  replicas: 1
   storageSize: 20Gi
 
 persistence:
@@ -16,7 +16,7 @@ persistence:
   accessModes:
     - ReadWriteOnce
 
-replicaCount: 2
+replicaCount: 1
 
 service:
   enabled: true
@@ -79,6 +79,7 @@ secret:
 networkPolicy:
   enabled: true
   port: 27017 
+  allowIngressFromRouter: false
   ingressFromApps:
     - forcet-poke-data
   egressTo: []
